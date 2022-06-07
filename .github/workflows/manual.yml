@@ -26,13 +26,25 @@ jobs:
       run: npm install -g gatsby-cli
     - name: Build the app
       run: gatsby build
+    - uses: mdallasanta/ssh-scp-deploy@{version}
     - name: Copy folder content recursively to remote
-      uses: garygrossgarten/github-action-scp@release
       with:
-          local: public
-          remote: /home/azureuser/public
-          host: ${{ secrets.HOST_IP }}
-          username: ${{ secrets.HOST_USERNAME }}
-          privateKey: ${{ secrets.HOST_KEY }}
-    - name: Copy files to proper folder
-      run: sudo cp -r * /var/www/html/gatsby-app-hasan
+        local: 'public'                                                  # Local file path - REQUIRED false - DEFAULT ./
+        remote: '/home/azureuser/gatsby-app'                                                 # Remote file path - REQUIRED false - DEFAULT ~/
+        host: ${{secrets.HOST_IP}}                                      # Remote server address - REQUIRED true                                # Remote server port - REQUIRED false - DEFAULT 22
+        user: ${{secrets.HOST_USERNAME}}                                      # Remote server user - REQUIRED true
+        key: ${{secrets.HOST_KEY}}                                        # Remote server private key - REQUIRED at least one of "password" or "key" 
+        pre_upload: rm -r /home/azureuser/gatsby-app  
+        post_upload: sudo cp -r * /var/www/html/gatsby-app-hasan  
+        ssh_options: -o StrictHostKeyChecking=no                     
+        scp_options: -v                         
+    # - name: Copy folder content recursively to remote
+    #   uses: garygrossgarten/github-action-scp@release
+    #   with:
+    #       local: public
+    #       remote: /home/azureuser/public
+    #       host: ${{ secrets.HOST_IP }}
+    #       username: ${{ secrets.HOST_USERNAME }}
+    #       privateKey: ${{ secrets.HOST_KEY }}
+    # - name: Copy files to proper folder
+    #   run: sudo cp -r * /var/www/html/gatsby-app-hasan
