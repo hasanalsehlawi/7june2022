@@ -26,12 +26,6 @@ jobs:
       run: npm install -g gatsby-cli
     - name: Build the app
       run: gatsby build
-    - name: Remove existing files
-      run: ssh -i ${{secrets.HOST_KEY}} ${{ secrets.HOST_USERNAME }}@${{ secrets.HOST_IP }}
-    - name: Remove files
-      run: rm -r /home/azureuser/public
-    - name: Remove files from var
-      run: rm -r /var/www/html/
     - name: Copy folder content recursively to remote
       uses: garygrossgarten/github-action-scp@release
       with:
