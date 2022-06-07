@@ -26,8 +26,8 @@ jobs:
       run: npm install -g gatsby-cli
     - name: Build the app
       run: gatsby build
-    - uses: mdallasanta/ssh-scp-deploy@{version}
     - name: Copy folder content recursively to remote
+    - uses: mdallasanta/ssh-scp-deploy@{version}
       with:
         local: 'public'                                                  # Local file path - REQUIRED false - DEFAULT ./
         remote: '/home/azureuser/gatsby-app'                                                 # Remote file path - REQUIRED false - DEFAULT ~/
