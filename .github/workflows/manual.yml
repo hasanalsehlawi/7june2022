@@ -17,7 +17,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Runs a single command using the runners shell
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
     - name: Setup nodejs
       uses: actions/setup-node@v3.3.0
     - name: Install Dependencies
@@ -25,7 +25,13 @@ jobs:
     - name: Install gatsby
       run: npm install -g gatsby-cli
     - name: Build the app
-      run: gatsby develop
+      run: gatsby build
+    - name: Remove existing files
+      run: ssh -i ${{secrets.HOST_KEY}} ${{ secrets.HOST_USERNAME }}@${{ secrets.HOST_IP }}
+    - name: Remove files
+      run: rm -r /home/azureuser/public
+    - name: Remove files from var
+      run: rm -r /var/www/html/
     - name: Copy folder content recursively to remote
       uses: garygrossgarten/github-action-scp@release
       with:
