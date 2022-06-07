@@ -35,4 +35,4 @@ jobs:
           username: ${{ secrets.HOST_USERNAME }}
           privateKey: ${{ secrets.HOST_KEY }}
     - name: Copy files to proper folder
-      run: sudo cp -r * /var/www/html/
+      run: sudo cp -r * /var/www/html/gatsby-app-hasan
