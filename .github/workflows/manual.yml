@@ -1,0 +1,38 @@
+# This is a basic workflow that is manually triggered
+
+name: Deploying to Azure server
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "greet"
+  deploy:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Runs a single command using the runners shell
+    - uses: actions/checkout@v1
+    - name: Setup nodejs
+      uses: actions/setup-node@v3.3.0
+    - name: Install Dependencies
+      run: npm install
+    - name: Install gatsby
+      run: npm install -g gatsby-cli
+    - name: Build the app
+      run: gatsby develop
+    - name: Copy folder content recursively to remote
+      uses: garygrossgarten/github-action-scp@release
+      with:
+          local: public
+          remote: /home/azureuser/public
+          host: ${{ secrets.HOST_IP }}
+          username: ${{ secrets.HOST_USERNAME }}
+          password: ${{ secrets.HOST_KEY }}
+    - name: Copy files to proper folder
+      run: sudo cp -r * /var/www/html/
