@@ -27,7 +27,7 @@ jobs:
     - name: Build the app
       run: gatsby build
     - name: Copy folder content recursively to remote
-      uses: mdallasanta/ssh-scp-deploy
+      uses: mdallasanta/ssh-scp-deploy@v1.2.0
       with:
         local: 'public'                                                  # Local file path - REQUIRED false - DEFAULT ./
         remote: '/home/azureuser/gatsby-app'                                                 # Remote file path - REQUIRED false - DEFAULT ~/
