@@ -34,8 +34,8 @@ jobs:
         host: ${{secrets.HOST_IP}}                                      # Remote server address - REQUIRED true                                # Remote server port - REQUIRED false - DEFAULT 22
         user: ${{secrets.HOST_USERNAME}}                                      # Remote server user - REQUIRED true
         key: ${{secrets.HOST_KEY}}                                        # Remote server private key - REQUIRED at least one of "password" or "key" 
-        pre_upload: rm -rf /home/azureuser/gatsby-app  
-        post_upload: sudo cp -r public/* /var/www/html/gatsby-app-hasan                
+        pre_upload: rm -rf /home/azureuser/public
+        post_upload: sudo cp -r public/* /var/www/html               
         scp_options: -r                        
     # - name: Copy folder content recursively to remote
     #   uses: garygrossgarten/github-action-scp@release
