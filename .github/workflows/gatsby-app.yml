@@ -1,0 +1,19 @@
+name: Gatsby Application Build and Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy Gatsby Application
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      
+      - name: Check Weather Prerequisites
+        run:
+          - node --version
+          - npm --version
