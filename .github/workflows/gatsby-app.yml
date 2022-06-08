@@ -34,7 +34,7 @@ jobs:
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.ssh_pivate_key }}" > ~/.ssh/deploy_key
+          echo "${{ secrets.HOST_KEY }}" > ~/.ssh/deploy_key
           sudo chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H "${{ secrets.host }}" > ~/.ssh/known_hosts
       - name: Copy the Build to the Server
