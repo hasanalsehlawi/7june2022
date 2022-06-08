@@ -10,9 +10,6 @@ jobs:
     name: Build and Deploy Gatsby Application
     runs-on: ubuntu-latest
     steps:
-      - name: check the OS info
-        run: cat /etc/os-release
-
       - name: Checkout Code
         uses: actions/checkout@v3
       
@@ -37,11 +34,9 @@ jobs:
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
-          echo "{{secrets.ssh_private_key}}" > ~/.ssh/deploy_key
+          echo "${{ secrets.ssh_pivate_key }}" > ~/.ssh/deploy_key
           sudo chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H "${{ secrets.host }}" > ~/.ssh/known_hosts
-
-      - name: Copy the public folder to the Server
+      - name: Copy the Build to the Server
         run: |
-          rsync -avz -e "ssh -i ~/.ssh/deploy_key" public/ "${{secrets.user}}@${{secrets.host}}:/home/${{  }}"
-        
+          rsync -avz -e "ssh -i ~/.ssh/deploy_key" public/ "${{ secrets.user }}@${{ secrets.host }}:/home/${{ secrets.user }}/gatsby-app"
